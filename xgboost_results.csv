@@ -1,0 +1,2 @@
+Model,Accuracy,AUC,Precision,Recall,F1,MCC
+XGBoost,0.935,0.9945,0.9355,0.935,0.935,0.9135

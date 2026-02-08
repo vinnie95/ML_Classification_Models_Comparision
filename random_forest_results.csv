@@ -1,0 +1,2 @@
+Model,Accuracy,AUC,Precision,Recall,F1,MCC
+Random Forest,0.895,0.9811,0.8942,0.895,0.8942,0.8602
