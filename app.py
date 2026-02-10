@@ -140,6 +140,40 @@ xgboost""")
     st.header("📤 Upload Test Data")
     st.markdown("Upload a CSV file with mobile phone specifications (without target column)")
     
+    # Add download link for sample test data
+    st.markdown("---")
+    st.subheader("📥 Don't have test data?")
+    
+    st.markdown("""
+    Download the test dataset from the GitHub repository:
+    """)
+    
+    # Fetch the CSV from GitHub and provide as download button
+    try:
+        import requests
+        github_csv_url = "https://raw.githubusercontent.com/vinnie95/ML_Classification_Models_Comparision/main/data/test.csv"
+        response = requests.get(github_csv_url)
+        
+        if response.status_code == 200:
+            st.download_button(
+                label="📂 Download test.csv from GitHub",
+                data=response.content,
+                file_name='test.csv',
+                mime='text/csv',
+                help="Click to download the test dataset"
+            )
+        else:
+            st.warning("Could not fetch the file from GitHub. Please check if the repository is public.")
+            st.markdown(f"**Alternative:** [View on GitHub](https://github.com/vinnie95/ML_Classification_Models_Comparision/blob/main/data/test.csv)")
+    except Exception as e:
+        st.warning(f"Could not fetch the file: {str(e)}")
+        st.markdown(f"**Alternative:** [View on GitHub](https://github.com/vinnie95/ML_Classification_Models_Comparision/blob/main/data/test.csv)")
+    
+    
+    st.info("💡 **Tip**: The test CSV should contain 20 feature columns. Optionally include 'price_range' column for model evaluation.")
+    
+    st.markdown("---")
+    
     uploaded_file = st.file_uploader("Choose a CSV file", type=['csv'])
     
     if uploaded_file is not None:
