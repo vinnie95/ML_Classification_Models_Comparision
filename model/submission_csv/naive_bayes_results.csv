@@ -1,0 +1,2 @@
+Model,Accuracy,AUC,Precision,Recall,F1,MCC
+Naive Bayes,0.8071,0.9535,0.8053,0.8071,0.806,0.7429

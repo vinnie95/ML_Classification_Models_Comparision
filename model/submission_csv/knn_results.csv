@@ -1,0 +1,2 @@
+Model,Accuracy,AUC,Precision,Recall,F1,MCC
+K-Nearest Neighbors,0.5429,0.7527,0.5537,0.5429,0.5421,0.3931

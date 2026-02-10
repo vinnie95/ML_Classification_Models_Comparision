@@ -43,12 +43,12 @@ model_info = {
 def load_models():
     models = {}
     model_files = {
-        "Logistic Regression": "logistic_regression.pkl",
-        "Decision Tree": "decision_tree.pkl",
-        "K-Nearest Neighbors": "knn.pkl",
-        "Naive Bayes": "naive_bayes.pkl",
-        "Random Forest": "random_forest.pkl",
-        "XGBoost": "xgboost.pkl"
+        "Logistic Regression": "model/artifacts/logistic_regression.pkl",
+        "Decision Tree": "model/artifacts/decision_tree.pkl",
+        "K-Nearest Neighbors": "model/artifacts/knn.pkl",
+        "Naive Bayes": "model/artifacts/naive_bayes.pkl",
+        "Random Forest": "model/artifacts/random_forest.pkl",
+        "XGBoost": "model/artifacts/xgboost.pkl"
     }
     
     missing_models = []
@@ -66,31 +66,19 @@ def load_models():
     
     # Load scaler
     scaler = None
-    if os.path.exists('scaler.pkl'):
+    if os.path.exists('model/artifacts/scaler.pkl'):
         try:
-            with open('scaler.pkl', 'rb') as f:
+            with open('model/artifacts/scaler.pkl', 'rb') as f:
                 scaler = pickle.load(f)
         except Exception as e:
             st.warning(f"⚠️ Error loading scaler: {str(e)}")
     
     return models, scaler, missing_models
 
-# Load comparison results
-@st.cache_data
-def load_comparison():
-    if os.path.exists('model_comparison.csv'):
-        try:
-            return pd.read_csv('model_comparison.csv')
-        except Exception as e:
-            st.warning(f"⚠️ Error loading comparison data: {str(e)}")
-            return None
-    return None
-
 # Main app
 def main():
     # Load models
     models, scaler, missing_models = load_models()
-    comparison_df = load_comparison()
     
     # Check if any models are loaded
     if not models:
@@ -98,24 +86,24 @@ def main():
         st.info("""
         **To deploy this app, you need to include the following files in your repository:**
         
-        1. **Model Files (.pkl)**:
-           - logistic_regression.pkl
-           - decision_tree.pkl
-           - knn.pkl
-           - naive_bayes.pkl
-           - random_forest.pkl
-           - xgboost.pkl
-           - scaler.pkl
+        1. **Model Files (.pkl)** in `model/artifacts/` directory:
+           - model/artifacts/logistic_regression.pkl
+           - model/artifacts/decision_tree.pkl
+           - model/artifacts/knn.pkl
+           - model/artifacts/naive_bayes.pkl
+           - model/artifacts/random_forest.pkl
+           - model/artifacts/xgboost.pkl
+           - model/artifacts/scaler.pkl
         
-        2. **Optional**: model_comparison.csv (for performance comparison)
-        
-        3. **Required**: requirements.txt (see sidebar for contents)
+        2. **Required**: requirements.txt (see sidebar for contents)
         
         **Steps to fix:**
         1. Train your models and save them as .pkl files
-        2. Add all .pkl files to your GitHub repository
-        3. Create a requirements.txt file
-        4. Redeploy your app
+        2. Create the directory structure: model/artifacts/
+        3. Add all .pkl files to model/artifacts/ folder
+        4. Add all files to your GitHub repository
+        5. Create a requirements.txt file
+        6. Redeploy your app
         """)
         
         # Show requirements.txt content
@@ -147,50 +135,6 @@ xgboost""")
     else:
         st.sidebar.error("No models available")
         return
-    
-    # Display overall comparison
-    st.header("📈 Model Performance Comparison")
-    
-    if comparison_df is not None:
-        st.dataframe(comparison_df, use_container_width=True)
-        
-        # Visualization
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            fig, ax = plt.subplots(figsize=(10, 6))
-            metrics = ['Accuracy', 'Precision', 'Recall', 'F1']
-            x = np.arange(len(comparison_df))
-            width = 0.2
-            
-            for i, metric in enumerate(metrics):
-                if metric in comparison_df.columns:
-                    ax.bar(x + i*width, comparison_df[metric], width, label=metric)
-            
-            ax.set_xlabel('Models')
-            ax.set_ylabel('Score')
-            ax.set_title('Model Performance Comparison')
-            ax.set_xticks(x + width * 1.5)
-            ax.set_xticklabels(comparison_df['ML Model Name'], rotation=45, ha='right')
-            ax.legend()
-            ax.grid(axis='y', alpha=0.3)
-            plt.tight_layout()
-            st.pyplot(fig)
-            plt.close()
-        
-        with col2:
-            fig, ax = plt.subplots(figsize=(10, 6))
-            ax.barh(comparison_df['ML Model Name'], comparison_df['Accuracy'], color='skyblue')
-            ax.set_xlabel('Accuracy Score')
-            ax.set_title('Model Accuracy Comparison')
-            ax.grid(axis='x', alpha=0.3)
-            plt.tight_layout()
-            st.pyplot(fig)
-            plt.close()
-    else:
-        st.info("ℹ️ Model comparison data not available. Upload 'model_comparison.csv' to see comparison charts.")
-    
-    st.markdown("---")
     
     # File upload section
     st.header("📤 Upload Test Data")
