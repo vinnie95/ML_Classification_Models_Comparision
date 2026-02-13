@@ -63,47 +63,45 @@ Six different machine learning classification models were implemented and evalua
 
 | ML Model Name | Accuracy | AUC | Precision | Recall | F1 | MCC |
 |---------------|----------|-----|-----------|--------|-------|------|
-| Logistic Regression | 0.9650 | 0.9952 | 0.9652 | 0.9650 | 0.9650 | 0.9533 |
-| Decision Tree | 0.9825 | 0.9825 | 0.9827 | 0.9825 | 0.9825 | 0.9767 |
-| K-Nearest Neighbors | 0.9575 | 0.9899 | 0.9582 | 0.9575 | 0.9575 | 0.9433 |
-| Naive Bayes | 0.8900 | 0.9762 | 0.8940 | 0.8900 | 0.8899 | 0.8533 |
-| Random Forest (Ensemble) | 0.9850 | 0.9989 | 0.9851 | 0.9850 | 0.9850 | 0.9800 |
-| XGBoost (Ensemble) | 0.9900 | 0.9993 | 0.9901 | 0.9900 | 0.9900 | 0.9867 |
-
-> **Note**: Replace the above metrics with your actual model performance values after training.
+| Logistic Regression | 0.9517 | 0.9970 | 0.9517 | 0.9517 | 0.9516 | 0.9356 |
+| Decision Tree | 0.8286 | 0.8888 | 0.8335 | 0.8286 | 0.8299 | 0.7719 |
+| K-Nearest Neighbors | 0.4958 | 0.7359 | 0.5046 | 0.4958 | 0.4939 | 0.3276 |
+| Naive Bayes | 0.7737 | 0.9398 | 0.7777 | 0.7737 | 0.7752 | 0.6983 |
+| Random Forest (Ensemble) | 0.8502 | 0.9725 | 0.8493 | 0.8502 | 0.8493 | 0.8004 |
+| XGBoost (Ensemble) | 0.8852 | 0.9865 | 0.8847 | 0.8852 | 0.8849 | 0.8468 |
 
 ---
 
 ## 📈 Model Performance Observations
 
 ### Logistic Regression
-Logistic Regression achieved strong performance with 96.5% accuracy, demonstrating excellent capability for this multi-class classification problem. The model shows high precision and recall across all price ranges, with an outstanding AUC score of 0.995. It provides fast predictions and good interpretability, making it suitable for baseline comparisons. However, being a linear model, it may struggle with complex non-linear relationships between features.
+Logistic Regression achieved the highest accuracy of 95.17% with an outstanding AUC score of 0.997, demonstrating exceptional performance for this multi-class classification problem. The model shows perfectly balanced precision and recall (95.17%), with a strong MCC score of 0.9356 indicating excellent classification quality. Despite being a linear model, it excels on this dataset, suggesting strong linear separability in the feature space after preprocessing. Its fast training time, interpretability, and superior performance make it the best model for this task.
 
 ### Decision Tree
-Decision Tree Classifier performed exceptionally well with 98.25% accuracy and balanced precision-recall metrics. The model excels at capturing non-linear patterns in the data and provides excellent interpretability through its tree structure. The high MCC score (0.9767) indicates strong overall classification quality. However, decision trees can be prone to overfitting on training data, which may affect generalization to unseen examples.
+Decision Tree achieved 82.86% accuracy with an AUC of 0.8888, showing moderate performance. The balanced precision (83.35%) and recall (82.86%) indicate consistent predictions across price ranges, with an MCC of 0.7719 confirming reasonable classification quality. While decision trees excel at capturing non-linear patterns and provide excellent interpretability, this single tree underperforms compared to linear and ensemble methods, suggesting potential overfitting or suboptimal hyperparameters. It ranks fourth overall among the six models tested.
 
 ### K-Nearest Neighbors
-KNN achieved 95.75% accuracy with strong AUC performance (0.9899). The model effectively captures local patterns in the feature space and works well for this dataset where similar specifications lead to similar price ranges. The balanced precision and recall indicate consistent performance across all classes. However, KNN can be computationally expensive for large datasets and sensitive to the choice of k parameter and distance metric.
+KNN demonstrated the weakest performance with only 49.58% accuracy, barely better than random guessing for a 4-class problem. The low AUC (0.7359), precision (50.46%), and recall (49.58%) indicate significant classification struggles. The very poor MCC score of 0.3276 confirms weak discrimination ability. This suggests the feature space lacks clear distance-based patterns, or the default hyperparameters are inappropriate. The curse of dimensionality with 20 features severely impacts KNN's effectiveness, making it unsuitable for this dataset without extensive tuning.
 
 ### Naive Bayes
-Naive Bayes showed the lowest performance among all models with 89% accuracy, though still achieving respectable results. The strong AUC score (0.9762) suggests good ranking capability despite lower accuracy. The model assumes feature independence, which may not hold true for mobile specifications (e.g., RAM and processor cores are often correlated). Despite this, Naive Bayes offers very fast training and prediction times, making it useful for quick baselines.
+Naive Bayes achieved 77.37% accuracy with a strong AUC of 0.9398, showing the largest gap between accuracy and AUC among all models. The balanced precision (77.77%) and recall (77.37%) with MCC of 0.6983 indicate moderate classification quality. The high AUC suggests well-calibrated probability estimates despite lower accuracy. The feature independence assumption clearly limits performance, as mobile specifications have inherent correlations (e.g., RAM and processor cores). However, its simplicity and speed make it useful for baseline comparisons.
 
 ### Random Forest (Ensemble)
-Random Forest delivered outstanding performance with 98.5% accuracy and the second-highest AUC score (0.9989). As an ensemble method combining multiple decision trees, it reduces overfitting while maintaining high accuracy. The model shows excellent balance across all metrics and handles feature interactions well. The high MCC score (0.98) confirms its robust classification capability. Random Forest is less interpretable than single decision trees but provides more stable and accurate predictions.
+Random Forest delivered 85.02% accuracy with an excellent AUC of 0.9725, demonstrating strong ensemble performance. The well-balanced precision (84.93%) and recall (85.02%) with MCC of 0.8004 indicate robust classification across all price ranges. By combining multiple decision trees, it reduces overfitting while maintaining good predictive power. It significantly outperforms the single decision tree (82.86%) and Naive Bayes (77.37%), validating the ensemble approach. However, it falls short of both Logistic Regression and XGBoost in overall performance.
 
 ### XGBoost (Ensemble)
-XGBoost achieved the best overall performance with 99% accuracy and the highest AUC score (0.9993), demonstrating superior predictive capability. The gradient boosting approach iteratively corrects errors, leading to highly accurate predictions across all price ranges. With the highest MCC score (0.9867), XGBoost shows excellent discrimination between classes. The model handles missing values well and provides feature importance rankings. However, it requires careful hyperparameter tuning and has longer training times compared to simpler models.
+XGBoost achieved 88.52% accuracy with the second-highest AUC of 0.9865, demonstrating strong gradient boosting performance. The balanced precision (88.47%) and recall (88.52%) with the highest MCC of 0.8468 show excellent discrimination ability. While XGBoost typically excels in most scenarios and performs better than Random Forest (85.02%), it surprisingly falls short of Logistic Regression's 95.17% accuracy. This suggests the dataset exhibits strong linear patterns that gradient boosting's complexity cannot improve upon, though it remains a solid second-choice model.
 
 ### Overall Insights
-1. **Ensemble Methods Superior**: Both Random Forest and XGBoost (ensemble methods) outperformed individual models, with XGBoost achieving the highest accuracy of 99%.
+1. **Logistic Regression Dominates**: Achieves highest accuracy (95.17%) and best AUC (0.997), indicating strong linear separability in the preprocessed feature space.
 
-2. **Tree-Based Models Excel**: Decision tree-based models (Decision Tree, Random Forest, XGBoost) consistently performed better than linear and probabilistic models, suggesting non-linear relationships between features and price ranges.
+2. **Ensemble Methods Strong**: XGBoost (88.52%) and Random Forest (85.02%) perform well but cannot surpass the linear model, suggesting limited benefit from complex non-linear interactions.
 
-3. **Feature Relationships Matter**: The lower performance of Naive Bayes indicates that the independence assumption is violated, highlighting the importance of feature correlations in mobile specifications.
+3. **KNN Fails Completely**: With only 49.58% accuracy, KNN is unsuitable for this dataset due to curse of dimensionality and poor distance-based patterns.
 
-4. **Balanced Dataset Performance**: All models showed similar precision and recall values, indicating the dataset is well-balanced across the four price range classes.
+4. **Linear Patterns Dominant**: The success of Logistic Regression over gradient boosting indicates that feature engineering and scaling created strong linear boundaries between price ranges.
 
-5. **Trade-off Considerations**: While XGBoost offers the best accuracy, simpler models like Logistic Regression provide faster predictions and better interpretability for production deployment scenarios where computational resources are limited.
+5. **Model Ranking**: Logistic Regression (95.17%) > XGBoost (88.52%) > Random Forest (85.02%) > Decision Tree (82.86%) > Naive Bayes (77.37%) > KNN (49.58%).
 
 ---
 
@@ -113,12 +111,12 @@ The deployed web application includes:
 
 ✅ **CSV File Upload**: Upload test data in CSV format  
 ✅ **Model Selection**: Choose from 6 different ML models via dropdown  
-✅ **Performance Comparison**: Interactive charts comparing all models  
 ✅ **Evaluation Metrics**: Display of Accuracy, AUC, Precision, Recall, F1, and MCC  
 ✅ **Confusion Matrix**: Heatmap visualization of prediction results  
 ✅ **Classification Report**: Detailed per-class performance metrics  
 ✅ **Prediction Export**: Download predictions as CSV  
 ✅ **Data Preview**: View uploaded data with predictions and probabilities  
+✅ **Test Data Download**: Download test.csv directly from GitHub  
 
 ---
 
@@ -132,16 +130,29 @@ mobile-price-classification/
 ├── README.md                       # This file
 │
 ├── model/                          # Model directory
-│   └── artifacts/                  # Saved models and files
-│       ├── logistic_regression.pkl
-│       ├── decision_tree.pkl
-│       ├── knn.pkl
-│       ├── naive_bayes.pkl
-│       ├── random_forest.pkl
-│       ├── xgboost.pkl
-│       ├── scaler.pkl
-│       ├── model_training.ipynb    # Training notebook
-│       └── model_comparison.csv    # Performance comparison
+│   ├── artifacts/                  # Saved models pkl files
+│   │   ├── logistic_regression.pkl
+│   │   ├── decision_tree.pkl
+│   │   ├── knn.pkl
+│   │   ├── naive_bayes.pkl
+│   │   ├── random_forest.pkl
+│   │   ├── xgboost.pkl
+│   │   └── scaler.pkl
+│   │
+│   ├── submission_csv/             # Training results
+│   │   ├── logistic_regression_results.csv
+│   │   ├── decision_tree_results.csv
+│   │   ├── knn_results.csv
+│   │   ├── naive_bayes_results.csv
+│   │   ├── random_forest_results.csv
+│   │   └── xgboost_results.csv
+│   │
+│   ├── 1_logistic_regression.ipynb # Training notebooks
+│   ├── 2_decision_tree.ipynb
+│   ├── 3_knn.ipynb
+│   ├── 4_naive_bayes.ipynb
+│   ├── 5_random_forest.ipynb
+│   └── 6_xgboost.ipynb
 │
 ├── data/                           # Dataset files
 │   ├── train.csv
@@ -163,8 +174,8 @@ mobile-price-classification/
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/your-username/mobile-price-classification.git
-cd mobile-price-classification
+git clone https://github.com/vinnie95/ML_Classification_Models_Comparision.git
+cd ML_Classification_Models_Comparision
 ```
 
 2. **Install dependencies**
@@ -193,7 +204,7 @@ Open your browser and navigate to `http://localhost:8501`
 5. Select your repository, branch, and `app.py`
 6. Click "Deploy"
 
-**Live App**: [Your Streamlit App URL Here]
+**Live App**: https://2025aa05437mlassignment2.streamlit.app/
 
 ---
 
@@ -248,10 +259,11 @@ The models were trained using the following approach:
 
 ## 🔍 Key Findings
 
-- **XGBoost** achieved the highest accuracy (99%) and is recommended for production use
+- **Logistic Regression** achieved the highest accuracy (95.17%) and is recommended for production use
+- **Linear separability** in the feature space makes simple models more effective than complex ensembles
 - **RAM** and **battery_power** were identified as the most important features
-- All models performed well on this balanced dataset
-- Ensemble methods significantly outperformed individual classifiers
+- **KNN** performed poorly (49.58%) due to curse of dimensionality with 20 features
+- The dataset exhibits strong linear patterns after proper feature scaling
 
 ---
 
