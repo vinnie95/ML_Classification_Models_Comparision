@@ -1,2 +1,0 @@
-Model,Accuracy,AUC,Precision,Recall,F1,MCC
-Decision Tree,0.8393,0.9023,0.8398,0.8393,0.839,0.7861
