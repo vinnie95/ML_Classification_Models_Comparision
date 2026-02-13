@@ -396,7 +396,6 @@ with st.sidebar.expander("🚀 Deployment Guide"):
     1. app.py (this file)
     2. requirements.txt
     3. Model files (.pkl)
-    4. model_comparison.csv (optional)
     
     **Common Issues:**
     - Missing model files
